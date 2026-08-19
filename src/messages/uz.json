@@ -188,5 +188,11 @@
     "contactTitle": "Aloqa",
     "rights": "Barcha huquqlar himoyalangan.",
     "backTop": "Yuqoriga"
+  },
+  "team": {
+    "label": "JAMOAMIZ",
+    "title": "SoftWeb ortidagi",
+    "highlight": "jamoa",
+    "description": "Biz zamonaviy texnologiyalar, kreativ fikrlash va sifatga e'tibor orqali bizneslar uchun raqamli mahsulotlar yaratamiz."
   }
 }

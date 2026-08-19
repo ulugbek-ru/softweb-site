@@ -1,11 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { siteConfig } from "@/config/site";
-import { ArrowUp, ArrowUpRight, Github, Send, Heart } from "lucide-react";
+import { ArrowUp, ArrowUpRight } from "lucide-react";
 import { Dictionary, Locale } from "@/lib/i18n";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useTheme } from "@/components/theme/ThemeProvider";
 
 interface FooterProps {
   dict: Dictionary;
@@ -13,109 +15,254 @@ interface FooterProps {
 }
 
 export const Footer: React.FC<FooterProps> = ({ dict, lang }) => {
+  const { theme } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  const handleHomeClick = () => {
+    setTimeout(() => {
+      const home = document.getElementById("home");
+
+      if (home) {
+        home.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }, 50);
   };
 
   const navLinks = [
-    { label: dict.nav.home, href: "#home" },
-    { label: dict.nav.about, href: "#about" },
-    { label: dict.nav.services, href: "#services" },
-    { label: dict.nav.whyUs, href: "#why-us" },
-    { label: dict.nav.process, href: "#process" },
-    { label: dict.nav.calculator, href: "#calculator" },
-    { label: dict.nav.contact, href: "#contact" },
+    {
+      label: dict.nav.home,
+      href: "#home",
+    },
+    {
+      label: dict.nav.about,
+      href: "#about",
+    },
+    {
+      label: dict.nav.services,
+      href: "#services",
+    },
+    {
+      label: dict.nav.whyUs,
+      href: "#why-us",
+    },
+    {
+      label: dict.nav.process,
+      href: "#process",
+    },
+    {
+      label: dict.nav.calculator,
+      href: "#calculator",
+    },
+    {
+      label: dict.nav.contact,
+      href: "#contact",
+    },
   ];
 
+  /*
+   * Logo:
+   *
+   * Light mode -> /logo.png
+   * Dark mode  -> /logo-light.png
+   *
+   * mounted tekshiruvi hydration muammosining oldini oladi.
+   */
+  const logoSrc =
+    mounted && theme === "dark"
+      ? "/logo-light.png"
+      : "/logo.png";
+
   return (
-    <footer className="relative border-t dark:border-white/10 border-slate-200 dark:bg-surface-dark-300 bg-white pt-16 pb-12 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b dark:border-white/10 border-slate-200">
-          {/* Brand Info */}
+    <footer className="relative overflow-hidden border-t border-slate-200 bg-white pt-16 pb-12 dark:border-white/10 dark:bg-surface-dark-300">
+      {/* Decorative background glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-32 -top-32 h-72 w-72 rounded-full bg-brand-green/5 blur-3xl dark:bg-brand-green/10"
+      />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-32 bottom-0 h-72 w-72 rounded-full bg-brand-orange/5 blur-3xl dark:bg-brand-orange/10"
+      />
+
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Main Footer */}
+        <div className="grid grid-cols-1 gap-10 border-b border-slate-200 pb-12 dark:border-white/10 md:grid-cols-2 lg:grid-cols-5">
+          {/* ==================== BRAND INFO ==================== */}
           <div className="lg:col-span-2">
-            <Link href={`/${lang}#home`} className="flex items-center gap-2.5 mb-4 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-green to-emerald-400 flex items-center justify-center font-bold text-white shadow-glow-green">
-                S
+            {/* Logo */}
+            <Link
+              href={`/${lang}#home`}
+              onClick={handleHomeClick}
+              className="group mb-5 inline-flex items-center"
+              aria-label="SoftWeb — Home"
+            >
+              <div className="relative h-10 w-[135px] sm:h-11 sm:w-[155px]">
+                <Image
+                  src={logoSrc}
+                  alt="SoftWeb"
+                  fill
+                  priority
+                  sizes="155px"
+                  className="object-contain object-left transition-transform duration-300 group-hover:scale-[1.03]"
+                />
               </div>
-              <span className="font-sans text-xl font-bold tracking-tight dark:text-white text-slate-900">
-                SOFT<span className="text-brand-green">WEB</span>
-              </span>
             </Link>
 
-            <p className="dark:text-zinc-400 text-slate-600 text-xs font-normal leading-relaxed max-w-sm mb-6">
+            {/* Description */}
+            <p className="mb-6 max-w-sm text-xs font-normal leading-relaxed text-slate-600 dark:text-zinc-400">
               {dict.footer.desc}
             </p>
 
+            {/* Availability */}
             <div className="flex items-center gap-2 text-xs font-mono text-brand-green">
-              <span className="w-2 h-2 rounded-full bg-brand-green animate-ping" />
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-green opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-green" />
+              </span>
+
               <span>{dict.footer.available}</span>
             </div>
           </div>
 
-          {/* Quick Navigation */}
+          {/* ==================== QUICK NAVIGATION ==================== */}
           <div>
-            <h4 className="font-sans font-bold text-sm uppercase font-mono tracking-wider dark:text-white text-slate-900 mb-4">
+            <h4 className="mb-4 font-mono text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white">
               {dict.footer.navTitle}
             </h4>
-            <ul className="space-y-2 text-xs font-mono">
+
+            <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={`/${lang}${link.href}`}
-                    className="dark:text-zinc-400 text-slate-600 hover:text-brand-green transition-colors"
+                    onClick={handleHomeClick}
+                    className="text-xs font-mono text-slate-600 transition-colors hover:text-brand-green dark:text-zinc-400 dark:hover:text-brand-green"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Capabilities */}
+          {/* ==================== CAPABILITIES ==================== */}
           <div>
-            <h4 className="font-sans font-bold text-sm uppercase font-mono tracking-wider dark:text-white text-slate-900 mb-4">
+            <h4 className="mb-4 font-mono text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white">
               {dict.footer.capTitle}
             </h4>
-            <ul className="space-y-2 text-xs font-mono dark:text-zinc-400 text-slate-600">
-              <li>Web Development</li>
-              <li>Landing Pages</li>
-              <li>Web Applications</li>
-              <li>SaaS Platforms</li>
-              <li>E-Commerce</li>
-              <li>UI/UX Design</li>
-              <li>Telegram Bots</li>
+
+            <ul className="space-y-2 text-xs font-mono text-slate-600 dark:text-zinc-400">
+              <li className="transition-colors hover:text-brand-green">
+                Web Development
+              </li>
+
+              <li className="transition-colors hover:text-brand-green">
+                Landing Pages
+              </li>
+
+              <li className="transition-colors hover:text-brand-green">
+                Web Applications
+              </li>
+
+              <li className="transition-colors hover:text-brand-green">
+                SaaS Platforms
+              </li>
+
+              <li className="transition-colors hover:text-brand-green">
+                E-Commerce
+              </li>
+
+              <li className="transition-colors hover:text-brand-green">
+                UI/UX Design
+              </li>
+
+              <li className="transition-colors hover:text-brand-green">
+                Telegram Bots
+              </li>
             </ul>
           </div>
 
-          {/* Contact & Language */}
+          {/* ==================== CONTACT ==================== */}
           <div>
-            <h4 className="font-sans font-bold text-sm uppercase font-mono tracking-wider dark:text-white text-slate-900 mb-4">
+            <h4 className="mb-4 font-mono text-sm font-bold uppercase tracking-wider text-slate-900 dark:text-white">
               {dict.footer.contactTitle}
             </h4>
-            <ul className="space-y-2 text-xs font-mono dark:text-zinc-400 text-slate-600 mb-6">
-              <li>Telegram: {siteConfig.telegramUsername}</li>
-              <li>Email: {siteConfig.contact.email}</li>
+
+            <ul className="mb-6 space-y-3 text-xs font-mono text-slate-600 dark:text-zinc-400">
+              {/* Telegram */}
+              <li>
+                <a
+                  href={siteConfig.telegramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-1.5 transition-colors hover:text-brand-green"
+                >
+                  <span>
+                    Telegram: {siteConfig.telegramUsername}
+                  </span>
+
+                  <ArrowUpRight className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
+                </a>
+              </li>
+
+              {/* Email */}
+              <li>
+                <a
+                  href={`mailto:${siteConfig.contact.email}`}
+                  className="transition-colors hover:text-brand-green"
+                >
+                  Email: {siteConfig.contact.email}
+                </a>
+              </li>
+
+              {/* Location */}
               <li>{siteConfig.contact.location}</li>
             </ul>
 
+            {/* Language Switcher */}
             <div className="flex items-center gap-2">
-              <LanguageSwitcher currentLang={lang} compact />
+              <LanguageSwitcher
+                currentLang={lang}
+                compact
+              />
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="text-xs font-mono dark:text-zinc-500 text-slate-500">
-            © {new Date().getFullYear()} {siteConfig.name}. {dict.footer.rights}
+        {/* ==================== BOTTOM BAR ==================== */}
+        <div className="flex flex-col items-center justify-between gap-4 pt-8 sm:flex-row">
+          {/* Copyright */}
+          <div className="text-center text-xs font-mono text-slate-500 dark:text-zinc-500 sm:text-left">
+            © {new Date().getFullYear()} {siteConfig.name}.{" "}
+            {dict.footer.rights}
           </div>
 
+          {/* Back to top */}
           <button
+            type="button"
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl dark:bg-white/5 bg-slate-100 dark:text-zinc-300 text-slate-700 hover:text-brand-green border dark:border-white/10 border-slate-200 text-xs font-mono font-bold transition-all"
+            aria-label={dict.footer.backTop}
+            className="group flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-mono font-bold text-slate-700 transition-all hover:border-brand-green/30 hover:text-brand-green dark:border-white/10 dark:bg-white/5 dark:text-zinc-300 dark:hover:border-brand-green/30 dark:hover:text-brand-green"
           >
             <span>{dict.footer.backTop}</span>
-            <ArrowUp className="w-3.5 h-3.5" />
+
+            <ArrowUp className="h-3.5 w-3.5 transition-transform duration-300 group-hover:-translate-y-0.5" />
           </button>
         </div>
       </div>

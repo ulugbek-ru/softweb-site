@@ -14,7 +14,7 @@ import { ProjectCalculator } from "@/components/sections/ProjectCalculator";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { Footer } from "@/components/common/Footer";
 import { CustomCursor } from "@/components/common/CustomCursor";
-
+import { OurTeamSection } from "@/components/sections/OurTeamSection";
 interface LocalizedPageProps {
   params: {
     lang: string;
@@ -70,6 +70,7 @@ export default function LocalizedPage({ params }: LocalizedPageProps) {
       <HeroSection dict={dict} />
       <AboutSection dict={dict} />
       <ServicesSection dict={dict} />
+      <OurTeamSection dict={dict}/>
       <WhySoftWeb dict={dict} />
       <TechStackSection dict={dict} />
       <ProcessSection dict={dict} />

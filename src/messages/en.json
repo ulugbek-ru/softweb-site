@@ -188,5 +188,11 @@
     "contactTitle": "Contact",
     "rights": "All rights reserved.",
     "backTop": "Back to Top"
+  },
+  "team": {
+    "label": "OUR TEAM",
+    "title": "The people behind",
+    "highlight": "SoftWeb",
+    "description": "We build modern digital products by combining technology, creativity and attention to detail."
   }
 }
