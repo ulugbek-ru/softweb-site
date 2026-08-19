@@ -7,12 +7,17 @@ import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/Button";
 import { Menu, X, ArrowUpRight, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Dictionary, Locale } from "@/lib/i18n";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface NavbarProps {
+  dict: Dictionary;
+  lang: Locale;
   onOpenOrderModal?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
+export const Navbar: React.FC<NavbarProps> = ({ dict, lang, onOpenOrderModal }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -21,7 +26,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 30);
 
-      // Simple active section detection
       const sections = ["home", "about", "services", "why-us", "process", "portfolio", "calculator", "contact"];
       const scrollPos = window.scrollY + 200;
 
@@ -56,6 +60,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
     }
   };
 
+  const navItems = [
+    { label: dict.nav.home, href: "#home", key: "home" },
+    { label: dict.nav.about, href: "#about", key: "about" },
+    { label: dict.nav.services, href: "#services", key: "services" },
+    { label: dict.nav.whyUs, href: "#why-us", key: "why-us" },
+    { label: dict.nav.process, href: "#process", key: "process" },
+    { label: dict.nav.calculator, href: "#calculator", key: "calculator" },
+    { label: dict.nav.contact, href: "#contact", key: "contact" },
+  ];
+
   return (
     <header
       className={cn(
@@ -66,52 +80,51 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
       <div className="max-w-7xl mx-auto">
         <div
           className={cn(
-            "flex items-center justify-between px-5 sm:px-6 py-3 rounded-2xl transition-all duration-300",
+            "flex items-center justify-between px-5 sm:px-6 py-3 rounded-2xl transition-all duration-300 border",
             isScrolled
-              ? "bg-[#0c0d14]/80 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
-              : "bg-transparent border border-transparent"
+              ? "dark:bg-surface-dark-200/90 bg-white/90 backdrop-blur-xl dark:border-white/10 border-slate-200/80 shadow-lg"
+              : "bg-transparent border-transparent"
           )}
         >
           {/* Logo */}
           <Link
-            href="#home"
+            href={`/${lang}#home`}
             onClick={(e) => handleNavClick(e, "#home")}
             className="flex items-center gap-2.5 group"
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-blue via-brand-indigo to-brand-purple flex items-center justify-center shadow-glow-sm transition-transform duration-300 group-hover:scale-105">
-              <span className="font-display font-extrabold text-sm text-white">S</span>
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-green to-emerald-400 flex items-center justify-center shadow-glow-green transition-transform duration-300 group-hover:scale-105">
+              <span className="font-sans font-black text-base text-white">S</span>
             </div>
-            <span className="font-display text-xl font-bold tracking-tight text-white flex items-center">
+            <span className="font-sans text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center">
               SOFT
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple">
+              <span className="text-brand-green">
                 WEB
               </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue ml-1 inline-block animate-pulse" />
+              <span className="w-2 h-2 rounded-full bg-brand-orange ml-1 inline-block animate-ping" />
             </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 bg-surface-100/40 p-1.5 rounded-xl border border-white/5 backdrop-blur-md">
-            {siteConfig.navLinks.map((link) => {
-              const target = link.href.replace("#", "");
-              const isActive = activeSection === target;
+          <nav className="hidden lg:flex items-center gap-1 dark:bg-surface-dark-100/60 bg-slate-100/80 p-1.5 rounded-xl border dark:border-white/5 border-slate-200 backdrop-blur-md">
+            {navItems.map((link) => {
+              const isActive = activeSection === link.key;
               return (
                 <Link
-                  key={link.label}
-                  href={link.href}
+                  key={link.key}
+                  href={`/${lang}${link.href}`}
                   onClick={(e) => handleNavClick(e, link.href)}
                   className={cn(
-                    "relative px-4 py-1.5 text-xs font-medium tracking-wide uppercase font-mono rounded-lg transition-all duration-200",
+                    "relative px-3.5 py-1.5 text-xs font-semibold tracking-wide font-sans rounded-lg transition-all duration-200",
                     isActive
-                      ? "text-white bg-white/10 shadow-sm"
-                      : "text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"
+                      ? "dark:text-white text-slate-900 dark:bg-white/10 bg-white shadow-sm font-bold"
+                      : "dark:text-zinc-400 text-slate-600 hover:text-slate-900 dark:hover:text-zinc-200 hover:bg-slate-200/50 dark:hover:bg-white/[0.04]"
                   )}
                 >
                   {link.label}
                   {isActive && (
                     <motion.div
                       layoutId="activeNavIndicator"
-                      className="absolute bottom-0 left-3 right-3 h-[2px] bg-gradient-to-r from-brand-blue to-brand-purple rounded-full"
+                      className="absolute bottom-0 left-2 right-2 h-[2.5px] bg-brand-green rounded-full"
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -120,11 +133,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
             })}
           </nav>
 
-          {/* Right Action */}
+          {/* Right Action Bar */}
           <div className="hidden sm:flex items-center gap-3">
+            <LanguageSwitcher currentLang={lang} />
+            <ThemeToggle />
+
             <Button
               size="sm"
-              variant="primary"
+              variant="orange"
               rightIcon={<ArrowUpRight className="w-4 h-4" />}
               onClick={() => {
                 if (onOpenOrderModal) {
@@ -137,15 +153,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
                 }
               }}
             >
-              Start a Project
+              {dict.nav.startProject}
             </Button>
           </div>
 
-          {/* Mobile Hamburger Button */}
+          {/* Mobile Menu Controls */}
           <div className="flex sm:hidden items-center gap-2">
+            <ThemeToggle />
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-surface-100/80 border border-white/10 text-zinc-300 hover:text-white"
+              className="p-2 rounded-xl dark:bg-surface-dark-100 bg-slate-100 border dark:border-white/10 border-slate-200 dark:text-zinc-300 text-slate-700 hover:text-brand-green"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -162,31 +179,38 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.25 }}
-            className="lg:hidden mt-3 max-w-7xl mx-auto bg-[#0c0d14]/95 backdrop-blur-2xl rounded-2xl border border-white/10 p-6 shadow-2xl overflow-hidden"
+            className="lg:hidden mt-3 max-w-7xl mx-auto dark:bg-surface-dark-200/95 bg-white/95 backdrop-blur-2xl rounded-2xl border dark:border-white/10 border-slate-200 p-6 shadow-2xl overflow-hidden"
           >
-            <nav className="flex flex-col gap-2 mb-6">
-              {siteConfig.navLinks.map((link, idx) => (
+            <div className="flex items-center justify-between pb-4 mb-4 border-b dark:border-white/10 border-slate-200">
+              <span className="text-xs font-mono font-bold dark:text-zinc-400 text-slate-500 uppercase">
+                Language
+              </span>
+              <LanguageSwitcher currentLang={lang} compact />
+            </div>
+
+            <nav className="flex flex-col gap-1.5 mb-6">
+              {navItems.map((link, idx) => (
                 <motion.div
-                  key={link.label}
+                  key={link.key}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: idx * 0.05 }}
+                  transition={{ delay: idx * 0.04 }}
                 >
                   <Link
-                    href={link.href}
+                    href={`/${lang}${link.href}`}
                     onClick={(e) => handleNavClick(e, link.href)}
-                    className="flex items-center justify-between py-3 px-4 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.05] transition-colors font-mono text-sm tracking-wide"
+                    className="flex items-center justify-between py-2.5 px-4 rounded-xl font-medium text-sm dark:text-zinc-300 text-slate-700 hover:text-brand-green dark:hover:bg-white/[0.05] hover:bg-slate-100 transition-colors"
                   >
                     <span>{link.label}</span>
-                    <span className="text-zinc-600 text-xs">0{idx + 1}</span>
+                    <span className="text-brand-orange text-xs font-mono font-bold">0{idx + 1}</span>
                   </Link>
                 </motion.div>
               ))}
             </nav>
 
-            <div className="flex flex-col gap-3 pt-4 border-t border-white/10">
+            <div className="flex flex-col gap-3 pt-4 border-t dark:border-white/10 border-slate-200">
               <Button
-                variant="primary"
+                variant="orange"
                 size="md"
                 className="w-full"
                 rightIcon={<Sparkles className="w-4 h-4" />}
@@ -196,15 +220,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenOrderModal }) => {
                   if (el) el.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                Estimate & Order Project
+                {dict.nav.estimateProject}
               </Button>
               <a
                 href={siteConfig.telegramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 py-2.5 text-xs font-mono text-zinc-400 hover:text-brand-blue transition-colors"
+                className="flex items-center justify-center gap-2 py-2 text-xs font-mono dark:text-zinc-400 text-slate-600 hover:text-brand-green transition-colors"
               >
-                <span>Direct Telegram: {siteConfig.telegramUsername}</span>
+                <span>Telegram: {siteConfig.telegramUsername}</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </a>
             </div>

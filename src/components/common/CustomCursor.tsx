@@ -17,7 +17,6 @@ export const CustomCursor: React.FC = () => {
   const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    // Only enable on desktop/non-touch devices
     const isTouch = window.matchMedia("(pointer: coarse)").matches;
     if (isTouch) return;
 
@@ -30,7 +29,6 @@ export const CustomCursor: React.FC = () => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
 
-      // Check if interactive
       const isInteractive = Boolean(
         target.closest("button") ||
         target.closest("a") ||
@@ -73,20 +71,20 @@ export const CustomCursor: React.FC = () => {
     <div className="fixed inset-0 pointer-events-none z-[99999] hidden md:block">
       {/* Outer Spring Ring */}
       <motion.div
-        className="fixed top-0 left-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-blue/50 flex items-center justify-center pointer-events-none"
+        className="fixed top-0 left-0 -translate-x-1/2 -translate-y-1/2 rounded-full border border-brand-green/60 flex items-center justify-center pointer-events-none"
         style={{
           x: smoothX,
           y: smoothY,
-          width: cursorText ? 80 : isPointer ? 46 : 28,
-          height: cursorText ? 80 : isPointer ? 46 : 28,
+          width: cursorText ? 80 : isPointer ? 44 : 26,
+          height: cursorText ? 80 : isPointer ? 44 : 26,
           backgroundColor: isPointer
-            ? "rgba(56, 189, 248, 0.12)"
-            : "rgba(99, 102, 241, 0.05)",
+            ? "rgba(34, 197, 94, 0.12)"
+            : "rgba(34, 197, 94, 0.04)",
           backdropFilter: isPointer ? "blur(2px)" : "none",
           transition: "width 0.2s ease-out, height 0.2s ease-out, background-color 0.2s ease-out",
         }}
         animate={{
-          scale: isHovered ? 0.8 : 1,
+          scale: isHovered ? 0.85 : 1,
         }}
       >
         {cursorText && (
@@ -96,9 +94,9 @@ export const CustomCursor: React.FC = () => {
         )}
       </motion.div>
 
-      {/* Tiny Sharp Center Dot */}
+      {/* Center Dot */}
       <motion.div
-        className="fixed top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-brand-blue pointer-events-none shadow-[0_0_8px_#38bdf8]"
+        className="fixed top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-brand-green pointer-events-none shadow-[0_0_8px_#22c55e]"
         style={{
           x: mouseX,
           y: mouseY,

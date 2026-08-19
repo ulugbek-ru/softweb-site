@@ -5,12 +5,11 @@ import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "glow" | "ghost";
+  variant?: "primary" | "orange" | "secondary" | "outline" | "ghost";
   size?: "sm" | "md" | "lg" | "xl";
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  asChild?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -29,26 +28,26 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const base =
-      "relative inline-flex items-center justify-center font-medium transition-all duration-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/50 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] group select-none";
+      "relative inline-flex items-center justify-center font-medium transition-all duration-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-green/50 disabled:opacity-50 disabled:pointer-events-none active:scale-[0.98] group select-none cursor-pointer";
 
     const sizes = {
       sm: "text-xs px-3.5 py-1.5 gap-1.5",
       md: "text-sm px-5 py-2.5 gap-2",
-      lg: "text-base px-7 py-3.5 gap-2.5",
-      xl: "text-lg px-8 py-4 gap-3 font-semibold",
+      lg: "text-base px-7 py-3.5 gap-2.5 font-semibold",
+      xl: "text-lg px-8 py-4 gap-3 font-bold",
     };
 
     const variants = {
       primary:
-        "bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 text-white shadow-[0_0_25px_rgba(99,102,241,0.35)] hover:shadow-[0_0_35px_rgba(99,102,241,0.6)] hover:brightness-110 border border-white/20",
+        "bg-brand-green hover:bg-brand-greenHover text-white shadow-glow-green hover:shadow-lg border border-green-500/20",
+      orange:
+        "bg-brand-orange hover:bg-brand-orangeHover text-white shadow-glow-orange hover:shadow-lg border border-orange-500/20",
       secondary:
-        "bg-surface-100/90 text-white border border-white/10 hover:bg-surface-50 hover:border-white/25 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)]",
+        "dark:bg-surface-dark-100 dark:text-white dark:border-white/10 dark:hover:bg-surface-dark-50 bg-white text-slate-800 border-slate-200 hover:bg-slate-50 hover:border-slate-300 shadow-sm",
       outline:
-        "bg-transparent text-zinc-200 border border-white/15 hover:border-white/40 hover:bg-white/[0.04]",
-      glow:
-        "bg-white text-black font-semibold shadow-[0_0_30px_rgba(255,255,255,0.4)] hover:shadow-[0_0_40px_rgba(255,255,255,0.7)] hover:bg-zinc-100",
+        "bg-transparent dark:text-zinc-200 text-slate-700 dark:border-white/15 border-slate-300 dark:hover:border-white/40 hover:border-brand-green dark:hover:bg-white/[0.04] hover:bg-slate-100/50",
       ghost:
-        "bg-transparent text-zinc-400 hover:text-white hover:bg-white/[0.06]",
+        "bg-transparent dark:text-zinc-400 text-slate-600 dark:hover:text-white hover:text-slate-900 dark:hover:bg-white/[0.06] hover:bg-slate-200/50",
     };
 
     return (

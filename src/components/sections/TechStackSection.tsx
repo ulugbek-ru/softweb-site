@@ -13,6 +13,7 @@ import {
   Zap,
   Terminal,
 } from "lucide-react";
+import { Dictionary } from "@/lib/i18n";
 
 interface TechItem {
   name: string;
@@ -37,12 +38,15 @@ const technologies: TechItem[] = [
   { name: "Vercel Edge", category: "Infrastructure", icon: <Zap className="w-4 h-4" /> },
 ];
 
-export const TechStackSection: React.FC = () => {
-  // Double list for seamless infinite loop
+interface TechStackSectionProps {
+  dict: Dictionary;
+}
+
+export const TechStackSection: React.FC<TechStackSectionProps> = ({ dict }) => {
   const marqueeItems = [...technologies, ...technologies];
 
   return (
-    <section className="relative py-20 overflow-hidden border-y border-white/5 bg-[#08090d]/60">
+    <section className="relative py-20 overflow-hidden border-y dark:border-white/5 border-slate-200 dark:bg-[#08090d]/60 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
@@ -52,13 +56,13 @@ export const TechStackSection: React.FC = () => {
           className="flex flex-col items-center"
         >
           <Badge variant="brand" className="mb-3">
-            Engineered With Precision
+            {dict.tech.badge}
           </Badge>
-          <h3 className="font-display text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Industry-Leading Technology Stack
+          <h3 className="font-sans text-2xl sm:text-3xl font-bold dark:text-white text-slate-900 tracking-tight">
+            {dict.tech.title}
           </h3>
-          <p className="text-zinc-400 text-sm font-light mt-2 max-w-lg">
-            We build exclusively with modern, battle-tested tools optimized for high velocity, stability, and speed.
+          <p className="dark:text-zinc-400 text-slate-600 text-sm font-normal mt-2 max-w-lg">
+            {dict.tech.subtitle}
           </p>
         </motion.div>
       </div>
@@ -69,16 +73,16 @@ export const TechStackSection: React.FC = () => {
           {marqueeItems.map((tech, idx) => (
             <div
               key={`${tech.name}-${idx}`}
-              className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-surface-100/70 border border-white/10 text-zinc-300 hover:border-brand-blue/40 hover:text-white transition-all shadow-sm shrink-0"
+              className="flex items-center gap-3 px-5 py-3 rounded-2xl dark:bg-surface-dark-100/70 bg-white border dark:border-white/10 border-slate-200 dark:text-zinc-300 text-slate-700 hover:border-brand-green transition-all shadow-sm shrink-0"
             >
-              <div className="text-brand-blue p-1.5 rounded-lg bg-surface-200 border border-white/5">
+              <div className="text-brand-green p-1.5 rounded-lg dark:bg-surface-dark-200 bg-slate-100 border dark:border-white/5 border-slate-200">
                 {tech.icon}
               </div>
               <div className="text-left">
-                <div className="font-mono text-xs font-bold text-white tracking-wide">
+                <div className="font-mono text-xs font-bold dark:text-white text-slate-900 tracking-wide">
                   {tech.name}
                 </div>
-                <div className="text-[10px] font-mono text-zinc-500">{tech.category}</div>
+                <div className="text-[10px] font-mono dark:text-zinc-500 text-slate-500 font-semibold">{tech.category}</div>
               </div>
             </div>
           ))}

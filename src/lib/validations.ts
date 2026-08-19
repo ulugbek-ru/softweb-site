@@ -41,6 +41,13 @@ export const quickContactSchema = z.object({
   phone: z.string().optional(),
   message: z
     .string()
-    .min(10, { message: "Message must be at least 10 characters" })
+    .min(5, { message: "Message must be at least 5 characters" })
     .max(1500, { message: "Message is too long" }),
+});
+
+export const contactFormSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters" }),
+  contact: z.string().min(3, { message: "Telegram or email is required" }),
+  phone: z.string().optional(),
+  message: z.string().min(5, { message: "Message must be at least 5 characters" }),
 });

@@ -25,7 +25,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   return (
     <div
       className={cn(
-        "flex flex-col mb-14 md:mb-20 max-w-3xl",
+        "flex flex-col mb-12 md:mb-16 max-w-3xl",
         align === "center" ? "mx-auto text-center items-center" : "text-left items-start",
         className
       )}
@@ -39,7 +39,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           className="mb-4"
         >
           <Badge variant="brand">
-            {number && <span className="text-brand-blue font-bold mr-1">{number} //</span>}
+            {number && <span className="text-brand-orange font-bold mr-1.5">{number} //</span>}
             {badge}
           </Badge>
         </motion.div>
@@ -50,7 +50,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1] mb-5"
+        className="font-sans text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight dark:text-white text-slate-900 leading-[1.15] mb-4"
       >
         {title}
       </motion.h2>
@@ -61,7 +61,7 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-zinc-400 text-base sm:text-lg md:text-xl font-light leading-relaxed max-w-2xl"
+          className="dark:text-zinc-400 text-slate-600 text-base sm:text-lg font-normal leading-relaxed max-w-2xl"
         >
           {subtitle}
         </motion.p>

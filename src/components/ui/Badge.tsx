@@ -4,7 +4,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "brand" | "glow" | "outline";
+  variant?: "default" | "brand" | "orange" | "outline";
   icon?: React.ReactNode;
 }
 
@@ -19,11 +19,14 @@ export const Badge: React.FC<BadgeProps> = ({
     "inline-flex items-center gap-1.5 px-3 py-1 text-xs font-mono tracking-wider uppercase rounded-full transition-all duration-300";
 
   const variants = {
-    default: "bg-surface-100/80 text-zinc-300 border border-white/10 shadow-sm",
+    default:
+      "dark:bg-surface-dark-100/80 dark:text-zinc-300 dark:border-white/10 bg-slate-100 text-slate-700 border-slate-200 border shadow-sm",
     brand:
-      "bg-brand-indigo/10 text-brand-blue border border-brand-indigo/30 shadow-[0_0_15px_rgba(99,102,241,0.15)]",
-    glow: "bg-brand-purple/10 text-brand-purple border border-brand-purple/40 shadow-glow-sm",
-    outline: "border border-white/20 text-zinc-400 hover:border-white/40",
+      "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shadow-sm",
+    orange:
+      "bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/30 shadow-sm",
+    outline:
+      "border dark:border-white/20 border-slate-300 dark:text-zinc-400 text-slate-600 hover:border-slate-400",
   };
 
   return (

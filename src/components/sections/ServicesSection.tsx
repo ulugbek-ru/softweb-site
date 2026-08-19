@@ -3,24 +3,35 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { SectionHeader } from "@/components/common/SectionHeader";
-import { servicesData, ServiceItem } from "@/config/services";
-import { ArrowUpRight, CheckCircle2, Sparkles, Layers, Code, Palette, ShoppingBag, Globe, Cpu } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import {
+  Code,
+  Globe,
+  Layers,
+  ShoppingBag,
+  Palette,
+  Bot,
+  Cpu,
+  Layout,
+  ArrowUpRight,
+} from "lucide-react";
+import { Dictionary } from "@/lib/i18n";
 
 interface ServicesSectionProps {
+  dict: Dictionary;
   onSelectServiceForCalculator?: (serviceId: string) => void;
 }
 
-const iconMap: Record<string, React.ReactNode> = {
-  "web-dev": <Code className="w-5 h-5" />,
-  "ui-ux": <Palette className="w-5 h-5" />,
-  "full-stack": <Layers className="w-5 h-5" />,
-  "ecommerce": <ShoppingBag className="w-5 h-5" />,
-  "business-sites": <Globe className="w-5 h-5" />,
-  "custom-products": <Cpu className="w-5 h-5" />,
-};
+interface ServiceCardItem {
+  id: string;
+  number: string;
+  titleKey: string;
+  descKey: string;
+  icon: React.ReactNode;
+  isOrangeAccent?: boolean;
+}
 
 export const ServicesSection: React.FC<ServicesSectionProps> = ({
+  dict,
   onSelectServiceForCalculator,
 }) => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
@@ -33,108 +44,145 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
+  const servicesList: ServiceCardItem[] = [
+    {
+      id: "web-dev",
+      number: "01",
+      titleKey: dict.services.webDevTitle,
+      descKey: dict.services.webDevDesc,
+      icon: <Code className="w-5 h-5" />,
+    },
+    {
+      id: "landing",
+      number: "02",
+      titleKey: dict.services.landingTitle,
+      descKey: dict.services.landingDesc,
+      icon: <Layout className="w-5 h-5" />,
+      isOrangeAccent: true,
+    },
+    {
+      id: "web-app",
+      number: "03",
+      titleKey: dict.services.webAppTitle,
+      descKey: dict.services.webAppDesc,
+      icon: <Layers className="w-5 h-5" />,
+    },
+    {
+      id: "saas",
+      number: "04",
+      titleKey: dict.services.saasTitle,
+      descKey: dict.services.saasDesc,
+      icon: <Globe className="w-5 h-5" />,
+      isOrangeAccent: true,
+    },
+    {
+      id: "ecommerce",
+      number: "05",
+      titleKey: dict.services.ecommerceTitle,
+      descKey: dict.services.ecommerceDesc,
+      icon: <ShoppingBag className="w-5 h-5" />,
+    },
+    {
+      id: "ui-ux",
+      number: "06",
+      titleKey: dict.services.uiuxTitle,
+      descKey: dict.services.uiuxDesc,
+      icon: <Palette className="w-5 h-5" />,
+      isOrangeAccent: true,
+    },
+    {
+      id: "tg-bot",
+      number: "07",
+      titleKey: dict.services.tgBotTitle,
+      descKey: dict.services.tgBotDesc,
+      icon: <Bot className="w-5 h-5" />,
+    },
+    {
+      id: "custom",
+      number: "08",
+      titleKey: dict.services.customTitle,
+      descKey: dict.services.customDesc,
+      icon: <Cpu className="w-5 h-5" />,
+      isOrangeAccent: true,
+    },
+  ];
+
   return (
     <section id="services" className="relative py-24 sm:py-32 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background Lighting Orbs */}
-      <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-brand-blue/10 blur-[150px] rounded-full pointer-events-none" />
+      {/* Background Radial Glow */}
+      <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-brand-green/10 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
         <SectionHeader
           number="02"
-          badge="Core Capabilities"
+          badge={dict.services.badge}
           title={
             <>
-              What We Build <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple">
-                Engineered for Impact.
+              {dict.services.title} <br />
+              <span className="text-brand-green">
+                {dict.services.titleAccent}
               </span>
             </>
           }
-          subtitle="From high-converting web applications to custom enterprise architectures, discover our comprehensive digital service spectrum."
+          subtitle={dict.services.subtitle}
         />
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mt-12">
-          {servicesData.map((service: ServiceItem, idx: number) => {
+        {/* 8 Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+          {servicesList.map((service, idx) => {
             const isHovered = hoveredId === service.id;
 
             return (
               <motion.div
                 key={service.id}
-                initial={{ opacity: 0, y: 25 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
                 onMouseEnter={() => setHoveredId(service.id)}
                 onMouseLeave={() => setHoveredId(null)}
-                className="group relative rounded-3xl bg-surface-100/50 border border-white/10 p-8 flex flex-col justify-between overflow-hidden transition-all duration-500 hover:border-brand-blue/40 hover:bg-surface-100/80 hover:shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+                className="group relative rounded-3xl dark:bg-surface-dark-100/70 bg-white border dark:border-white/10 border-slate-200 p-6 flex flex-col justify-between overflow-hidden transition-all duration-300 dark:hover:border-brand-green/50 hover:border-brand-green shadow-sm hover:shadow-xl"
               >
-                {/* Giant Ambient Index Watermark on Hover */}
-                <div
-                  className="absolute -right-3 -top-6 font-display font-black text-8xl md:text-9xl text-white/[0.03] select-none pointer-events-none transition-all duration-500 group-hover:text-white/[0.08] group-hover:scale-105"
-                  style={{
-                    color: isHovered ? "rgba(99, 102, 241, 0.12)" : undefined,
-                  }}
-                >
+                {/* Number Watermark */}
+                <div className="absolute -right-2 -top-4 font-sans font-extrabold text-7xl dark:text-white/[0.04] text-slate-900/[0.04] select-none pointer-events-none transition-all duration-300 group-hover:scale-105">
                   {service.number}
                 </div>
 
-                {/* Subtle Radial Glow Gradient */}
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none`}
-                />
-
-                <div className="relative z-10">
-                  {/* Service Top Bar */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="w-12 h-12 rounded-2xl bg-surface-200 border border-white/10 flex items-center justify-center text-white group-hover:text-brand-blue group-hover:border-brand-blue/30 group-hover:shadow-[0_0_20px_rgba(56,189,248,0.2)] transition-all duration-300">
-                      {iconMap[service.id] || <Sparkles className="w-5 h-5" />}
+                <div>
+                  {/* Icon & Index */}
+                  <div className="flex items-center justify-between mb-5">
+                    <div
+                      className={`w-11 h-11 rounded-2xl flex items-center justify-center transition-all ${
+                        service.isOrangeAccent
+                          ? "bg-orange-500/10 text-brand-orange border border-orange-500/20"
+                          : "bg-emerald-500/10 text-brand-green border border-emerald-500/20"
+                      }`}
+                    >
+                      {service.icon}
                     </div>
 
-                    <span className="font-mono text-xs font-semibold px-3 py-1 rounded-full bg-white/5 border border-white/10 text-zinc-400 group-hover:text-white transition-colors">
+                    <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full dark:bg-white/5 bg-slate-100 dark:text-zinc-400 text-slate-600 border dark:border-white/10 border-slate-200">
                       {service.number}
                     </span>
                   </div>
 
-                  {/* Title & Short Description */}
-                  <h3 className="font-display text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-brand-blue transition-all duration-300">
-                    {service.title}
+                  {/* Title & Description */}
+                  <h3 className="font-sans font-bold text-xl dark:text-white text-slate-900 mb-2.5 group-hover:text-brand-green transition-colors">
+                    {service.titleKey}
                   </h3>
 
-                  <p className="text-zinc-400 text-sm leading-relaxed mb-6 font-light">
-                    {service.shortDesc}
+                  <p className="dark:text-zinc-400 text-slate-600 text-xs leading-relaxed font-normal mb-6">
+                    {service.descKey}
                   </p>
-
-                  {/* Feature Highlights */}
-                  <div className="space-y-2.5 mb-8">
-                    {service.features.slice(0, 3).map((feat) => (
-                      <div key={feat} className="flex items-start gap-2.5 text-xs text-zinc-300">
-                        <CheckCircle2 className="w-4 h-4 text-brand-blue shrink-0 mt-0.5" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
 
-                {/* Card Footer Actions */}
-                <div className="relative z-10 pt-6 border-t border-white/10 flex items-center justify-between">
-                  <div className="flex flex-wrap gap-1.5 max-w-[65%]">
-                    {service.tags.slice(0, 2).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2 py-0.5 text-[10px] font-mono rounded bg-white/5 text-zinc-400 border border-white/5"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
+                {/* Card Action */}
+                <div className="pt-4 border-t dark:border-white/10 border-slate-200 flex items-center justify-between">
                   <button
                     onClick={() => handleSelectService(service.id)}
-                    className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-zinc-400 group-hover:text-brand-blue transition-colors group-hover:translate-x-0.5"
-                    aria-label={`Calculate ${service.title}`}
+                    className="inline-flex items-center gap-1 text-xs font-mono font-bold text-brand-green hover:text-brand-greenHover transition-colors group-hover:translate-x-0.5"
                   >
-                    <span>Estimate</span>
+                    <span>{dict.services.estimateBtn}</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </button>
                 </div>

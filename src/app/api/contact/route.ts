@@ -1,11 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
-import { quickContactSchema } from "@/lib/validations";
+import { quickContactSchema, contactFormSchema } from "@/lib/validations";
 import { sendTelegramContactNotification } from "@/lib/telegram";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const parseResult = quickContactSchema.safeParse(body);
+
+    // Support both contactFormSchema (name, contact) and quickContactSchema (fullName, telegramOrEmail)
+    const fullName = body.fullName || body.name || "Client";
+    const telegramOrEmail = body.telegramOrEmail || body.contact || "@client";
+    const phone = body.phone;
+    const message = body.message || "";
+
+    const payload = {
+      fullName,
+      telegramOrEmail,
+      phone,
+      message,
+    };
+
+    const parseResult = quickContactSchema.safeParse(payload);
 
     if (!parseResult.success) {
       return NextResponse.json(
@@ -18,8 +32,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const payload = parseResult.data;
-    const tgResult = await sendTelegramContactNotification(payload);
+    const tgResult = await sendTelegramContactNotification(parseResult.data);
 
     if (!tgResult.success) {
       console.error("Failed to send contact inquiry to Telegram:", tgResult.error);

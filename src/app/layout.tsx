@@ -1,18 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Outfit, Space_Mono } from "next/font/google";
+import { Ubuntu, Rubik_Spray_Paint, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/config/site";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+const ubuntu = Ubuntu({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-ubuntu",
   display: "swap",
 });
 
-const outfit = Outfit({
+const rubikSpray = Rubik_Spray_Paint({
+  weight: ["400"],
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-rubik-spray",
   display: "swap",
 });
 
@@ -24,7 +27,10 @@ const spaceMono = Space_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#07080c",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#090a0f" },
+    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
+  ],
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -65,7 +71,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "uz_UZ",
     url: siteConfig.url,
     title: siteConfig.title,
     description: siteConfig.description,
@@ -88,23 +94,38 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body
-        className={`${inter.variable} ${outfit.variable} ${spaceMono.variable} font-sans bg-[#07080c] text-[#f3f4f6] antialiased selection:bg-brand-indigo/30 selection:text-white min-h-screen relative`}
-      >
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "rgba(13, 15, 23, 0.95)",
-              color: "#f3f4f6",
-              border: "1px solid rgba(255, 255, 255, 0.12)",
-              backdropFilter: "blur(12px)",
-              fontFamily: "var(--font-inter)",
-            },
+    <html lang="uz" className="dark scroll-smooth" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('softweb-theme');
+                  var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (stored === 'dark' || (!stored && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                  } else if (stored === 'light') {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
           }}
         />
-        {children}
+      </head>
+      <body
+        className={`${ubuntu.variable} ${rubikSpray.variable} ${spaceMono.variable} font-sans antialiased min-h-screen relative`}
+      >
+        <ThemeProvider>
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              className: "font-sans text-sm rounded-xl border",
+            }}
+          />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
