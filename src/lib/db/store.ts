@@ -13,7 +13,7 @@ import {
 } from "./types";
 import { CalculatorState } from "@/types/calculator";
 
-const DATA_DIR = path.join(process.cwd(), "data");
+const DATA_DIR = "/data";
 const DB_FILE = path.join(DATA_DIR, "softweb-db.json");
 
 // In-memory cache
