@@ -193,6 +193,51 @@
     "label": "JAMOAMIZ",
     "title": "SoftWeb ortidagi",
     "highlight": "jamoa",
-    "description": "Biz zamonaviy texnologiyalar, kreativ fikrlash va sifatga e'tibor orqali bizneslar uchun raqamli mahsulotlar yaratamiz."
+    "description": "Biz zamonaviy texnologiyalar, kreativ fikrlash va sifatga e'tibor orqali bizneslar uchun raqamli mahsulotlar yaratamiz.",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "designer": "Figma Designer",
+    "members": {
+      "1": {
+        "role": "Full-Stack Developer",
+        "description": "Frontend va backend texnologiyalarini birlashtirib, g‘oyadan tortib tayyor mahsulotgacha bo‘lgan zamonaviy web loyihalarni ishlab chiqadi."
+      },
+      "2": {
+        "role": "Frontend Developer",
+        "description": "Zamonaviy va responsive interfeyslar yaratib, foydalanuvchilar uchun qulay, tezkor va vizual jihatdan kuchli web tajribalarni ishlab chiqadi."
+      },
+      "3": {
+        "role": "Frontend Developer",
+        "description": "React va zamonaviy frontend texnologiyalari yordamida interaktiv komponentlar, animatsiyalar va barcha qurilmalarga mos interfeyslar yaratadi."
+      },
+      "4": {
+        "role": "Frontend Developer",
+        "description": "Figma dizaynlarini pixel-perfect web interfeyslarga aylantirib, UX, accessibility va performance talablariga e’tibor qaratadi."
+      },
+      "5": {
+        "role": "Backend Developer",
+        "description": "Kuchli API'lar, ma’lumotlar bazalari va server tizimlarini ishlab chiqib, web ilovalarning barqaror va ishonchli ishlashini ta’minlaydi."
+      },
+      "6": {
+        "role": "Backend Developer",
+        "description": "Telegram botlar, avtomatlashtirilgan xizmatlar va uchinchi tomon API integratsiyalarini ishlab chiqib, biznes jarayonlarini raqamlashtiradi."
+      },
+      "7": {
+        "role": "Backend Developer",
+        "description": "Xavfsiz autentifikatsiya, ma’lumotlar bazasi arxitekturasi va scalable backend tizimlarini yaratib, loyihalarni katta yuklamalarga tayyorlaydi."
+      },
+      "8": {
+        "role": "Backend Developer",
+        "description": "Murakkab server-side logikalar, REST API'lar va real-time funksiyalarni ishlab chiqib, raqamli mahsulotlarning texnik asosini quradi."
+      },
+      "9": {
+        "role": "Figma Designer",
+        "description": "Brend g‘oyalarini zamonaviy va funksional interfeyslarga aylantirib, foydalanuvchi tajribasini har bir detaligacha puxta loyihalashtiradi."
+      },
+      "10": {
+        "role": "Figma Designer",
+        "description": "Minimalizm, kreativlik va UX tamoyillarini uyg‘unlashtirib, web va digital mahsulotlar uchun professional dizaynlar yaratadi."
+      }
+    }
   }
 }

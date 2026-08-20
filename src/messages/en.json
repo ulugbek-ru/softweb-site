@@ -190,9 +190,54 @@
     "backTop": "Back to Top"
   },
   "team": {
-    "label": "OUR TEAM",
-    "title": "The people behind",
-    "highlight": "SoftWeb",
-    "description": "We build modern digital products by combining technology, creativity and attention to detail."
+  "label": "OUR TEAM",
+  "title": "The people behind",
+  "highlight": "SoftWeb",
+  "description": "We build digital products for businesses through modern technology, creative thinking and attention to quality.",
+  "frontend": "Frontend",
+  "backend": "Backend",
+    "designer": "Figma Designer",
+  "members": {
+    "1": {
+      "role": "Full-Stack Developer",
+      "description": "Combines frontend and backend technologies to build modern web products from the initial idea to a fully functional solution."
+    },
+    "2": {
+      "role": "Frontend Developer",
+      "description": "Builds modern responsive interfaces focused on usability, performance and engaging user experiences across all devices."
+    },
+    "3": {
+      "role": "Frontend Developer",
+      "description": "Creates interactive components, smooth animations and responsive interfaces using React and modern frontend technologies."
+    },
+    "4": {
+      "role": "Frontend Developer",
+      "description": "Transforms Figma designs into pixel-perfect web interfaces with strong attention to UX, accessibility and performance."
+    },
+    "5": {
+      "role": "Backend Developer",
+      "description": "Develops reliable APIs, databases and server-side systems that keep modern web applications stable, secure and scalable."
+    },
+    "6": {
+      "role": "Backend Developer",
+      "description": "Builds Telegram bots, automated services and third-party API integrations to help businesses streamline and automate their workflows."
+    },
+    "7": {
+      "role": "Backend Developer",
+      "description": "Designs secure authentication systems, database architectures and scalable backend infrastructure ready for growing applications."
+    },
+    "8": {
+      "role": "Backend Developer",
+      "description": "Develops complex server-side logic, REST APIs and real-time features that form the technical foundation of modern digital products."
+    },
+    "9": {
+      "role": "Figma Designer",
+      "description": "Transforms brand ideas into modern and functional interfaces, carefully designing every detail of the user experience."
+    },
+    "10": {
+      "role": "Figma Designer",
+      "description": "Combines minimalism, creativity and UX principles to create professional designs for web and digital products."
+    }
   }
+} 
 }
